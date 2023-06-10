@@ -1,0 +1,24 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+name: test-aml-screening-service
+environment: testing
+enabled: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+  datasource:
+    driverClassName:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+name: dev-aml-screening-service
+environment: development
+enabled: true
+
+server:
+  shutdown: graceful
