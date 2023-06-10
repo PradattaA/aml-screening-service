@@ -1,14 +1,7 @@
 package com.pradatta.amlscreening.api.response;
 
 import com.pradatta.amlscreening.jpa.datamodel.SanctionEntityType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
@@ -26,13 +19,13 @@ public class FinancialSanctionedEntity {
 
     /**
      *
-     * @param type
-     * @param logicalId
-     * @param firstName
-     * @param lastName
-     * @param wholeName
-     * @param publicationDate
-     * @param publicationUrl
+     * @param type SanctionEntityType
+     * @param logicalId Long
+     * @param firstName String
+     * @param lastName String
+     * @param wholeName String
+     * @param publicationDate Date
+     * @param publicationUrl Date
      */
     public FinancialSanctionedEntity(SanctionEntityType type, Long logicalId, String firstName, String middleName, String lastName, String wholeName, Date publicationDate, String publicationUrl) {
         this.type = type;
