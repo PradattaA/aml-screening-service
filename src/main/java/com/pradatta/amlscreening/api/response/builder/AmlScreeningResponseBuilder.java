@@ -4,15 +4,17 @@ import com.pradatta.amlscreening.api.response.AmlScreeningResponse;
 import com.pradatta.amlscreening.api.response.FinancialSanctionedEntity;
 import com.pradatta.amlscreening.api.response.ScreeningStatusColour;
 
+import java.util.Collection;
+
 public class AmlScreeningResponseBuilder {
-    private FinancialSanctionedEntity financialSanctionedEntity;
+    private Collection<FinancialSanctionedEntity> financialSanctionedEntities;
     private boolean matched;
     private ScreeningStatusColour statusColour;
-    private float confidence;
+    private double matchScore;
 
-    public AmlScreeningResponseBuilder setFinancialSanctionedEntity(
-            FinancialSanctionedEntity financialSanctionedEntity) {
-        this.financialSanctionedEntity = financialSanctionedEntity;
+    public AmlScreeningResponseBuilder setFinancialSanctionedEntities(
+            Collection<FinancialSanctionedEntity> financialSanctionedEntities) {
+        this.financialSanctionedEntities = financialSanctionedEntities;
         return this;
     }
 
@@ -26,12 +28,12 @@ public class AmlScreeningResponseBuilder {
         return this;
     }
 
-    public AmlScreeningResponseBuilder setConfidence(float confidence) {
-        this.confidence = confidence;
+    public AmlScreeningResponseBuilder setMatchScore(double matchScore) {
+        this.matchScore = matchScore;
         return this;
     }
 
     public AmlScreeningResponse createAmlScreeningResponse() {
-        return new AmlScreeningResponse(financialSanctionedEntity, matched, statusColour, confidence);
+        return new AmlScreeningResponse(financialSanctionedEntities, matched, statusColour, matchScore);
     }
 }

@@ -15,19 +15,24 @@ public class FinancialSanctionedEntity {
     private Date publicationDate;
     private String publicationUrl;
 
+    private double matchScore;
 
+
+    public FinancialSanctionedEntity() {
+    }
 
     /**
-     *
-     * @param type SanctionEntityType
-     * @param logicalId Long
-     * @param firstName String
-     * @param lastName String
-     * @param wholeName String
+     * @param type            SanctionEntityType
+     * @param logicalId       Long
+     * @param firstName       String
+     * @param lastName        String
+     * @param wholeName       String
      * @param publicationDate Date
-     * @param publicationUrl Date
+     * @param publicationUrl  Date
+     * @param matchScore      Double
      */
-    public FinancialSanctionedEntity(SanctionEntityType type, Long logicalId, String firstName, String middleName, String lastName, String wholeName, Date publicationDate, String publicationUrl) {
+    public FinancialSanctionedEntity(SanctionEntityType type, Long logicalId, String firstName, String middleName, String lastName, String wholeName, Date publicationDate, String publicationUrl,
+                                     double matchScore) {
         this.type = type;
         this.logicalId = logicalId;
         this.firstName = firstName;
@@ -36,6 +41,7 @@ public class FinancialSanctionedEntity {
         this.wholeName = wholeName;
         this.publicationDate = publicationDate;
         this.publicationUrl = publicationUrl;
+        this.matchScore = matchScore;
     }
 
 
@@ -116,4 +122,11 @@ public class FinancialSanctionedEntity {
         this.middleName = middleName;
     }
 
+    public double getMatchScore() {
+        return matchScore;
+    }
+
+    public void setMatchScore(double matchScore) {
+        this.matchScore = matchScore;
+    }
 }

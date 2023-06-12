@@ -1,5 +1,6 @@
 package com.pradatta.amlscreening.api.controller;
 
+import com.pradatta.amlscreening.api.response.AmlScreeningResponse;
 import com.pradatta.amlscreening.service.AmlScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,7 @@ public class AmlScreeningController {
     @Autowired
     AmlScreeningService amlScreeningService;
     @GetMapping("/check/{name}")
-    Boolean checkSanctionListForName(@PathVariable String name) {
+    AmlScreeningResponse checkSanctionListForName(@PathVariable String name) {
         return amlScreeningService.checkSanctionListForName(name);
     }
 }

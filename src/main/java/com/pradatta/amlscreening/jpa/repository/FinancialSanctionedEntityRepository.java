@@ -10,7 +10,21 @@ import java.util.Optional;
 
 @Configuration
 public interface FinancialSanctionedEntityRepository extends JpaRepository<FinancialSanctionedEntity, Long> {
-    Optional<FinancialSanctionedEntity> findByLogicalId(Long logicalId);
+    List<FinancialSanctionedEntity> findByLogicalId(Long logicalId);
 
     Optional<FinancialSanctionedEntity> findByWholeName(String wholeName);
+
+    /**
+     * Need to fetch close enough matched form the DB
+     * Ideally need to use something like SOUNDEX, TRIGRAMS
+     * @param name
+     * @return
+     */
+    List<FinancialSanctionedEntity> findByWholeNameIgnoreCaseContaining(String name);
+
+    List<FinancialSanctionedEntity> findByFirstNameSoundex(String soundex);
+    List<FinancialSanctionedEntity> findByMiddleNameSoundex(String soundex);
+    List<FinancialSanctionedEntity> findByLastNameSoundex(String soundex);
+    List<FinancialSanctionedEntity> findByWholeNameSoundex(String soundex);
+
 }

@@ -14,6 +14,7 @@ public class FinancialSanctionedEntityBuilder {
     private String wholeName;
     private Date publicationDate;
     private String publicationUrl;
+    private double matchScore;
 
     public FinancialSanctionedEntityBuilder setType(SanctionEntityType type) {
         this.type = type;
@@ -55,8 +56,15 @@ public class FinancialSanctionedEntityBuilder {
         return this;
     }
 
+
+    public FinancialSanctionedEntityBuilder setMatchScore(double matchScore) {
+        this.matchScore = matchScore;
+        return this;
+    }
+
     public FinancialSanctionedEntity createFinancialSanctionedEntity() {
         return new FinancialSanctionedEntity(type, logicalId, firstName, middleName, lastName, wholeName,
-                                             publicationDate, publicationUrl);
+                                             publicationDate, publicationUrl, matchScore);
     }
+
 }
