@@ -79,8 +79,10 @@ Run `AmlScreeningServiceApplication` with VM Option
 
 ### Service component and data flow
 
-![IMG_0003.jpg](..%2F..%2FDownloads%2FIMG_0003.jpg)
+![IMG_0003](https://github.com/neelhridoy/aml-screening-service/assets/79056702/b93a7714-85c2-4a17-a5c0-3750254b5021)
 
 
 ### Fuzzy Lookup from DB Logic
-![IMG_0004.jpg](..%2F..%2FDownloads%2FIMG_0004.jpg)
+![IMG_0004](https://github.com/neelhridoy/aml-screening-service/assets/79056702/591ff402-e1de-45d2-b6e8-afe783c296ce)
+
+$ brew install postgresql
