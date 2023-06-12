@@ -55,3 +55,32 @@ The submission will be followed up with a review call where we will ask you to w
 **When implementing in a Pairing session:**  
 We want to mimic real life as much as possible. This means that candidate should be able to google or ask questions.  
 We will spend 5 minutes introducing the challenge, 40 minutes coding and 15 minutes discussing the solution.
+
+# How to run
+ Install PostgreSQL
+
+```bash
+$ brew install postgresql
+```
+
+Start PostgreSQL service
+
+```bash
+$ brew services start postgresql # or "brew services run postgresql" to have it not restart at boot time
+```
+
+Run `AmlScreeningServiceApplication` with VM Option 
+
+```agsl
+-Dspring.profiles.active=development
+```
+
+# Service design and planning notes
+
+### Service component and data flow
+
+![IMG_0003.jpg](..%2F..%2FDownloads%2FIMG_0003.jpg)
+
+
+### Fuzzy Lookup from DB Logic
+![IMG_0004.jpg](..%2F..%2FDownloads%2FIMG_0004.jpg)
