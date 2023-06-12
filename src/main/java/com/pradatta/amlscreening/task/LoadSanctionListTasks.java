@@ -27,6 +27,7 @@ public class LoadSanctionListTasks {
      * For now it's just set to run every minute and log.
      * Will implement loading logic by downloading it from internet and then load it in to database
      */
+//    @Scheduled( cron = "0 */1 * ? * *")
     @Scheduled(cron = "0 0 * * * ?")
     public void reportCurrentTime() {
         log.info("Loading the sanction lists at {}", dateFormat.format(new Date()));

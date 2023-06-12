@@ -66,6 +66,7 @@ public class SanctionEntityLoader {
                     log.info("Saved sanctioned entity: ID ==> " + sanctionedEntityFromCSVRow.getId());
                 }
             }
+            financialSanctionedEntityRepository.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

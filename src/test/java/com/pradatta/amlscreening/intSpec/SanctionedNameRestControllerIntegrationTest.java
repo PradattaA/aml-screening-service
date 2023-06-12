@@ -3,6 +3,8 @@ package com.pradatta.amlscreening.intSpec;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.pradatta.amlscreening.api.response.AmlScreeningResponse;
+import com.pradatta.amlscreening.api.response.ScreeningStatusColour;
 import com.pradatta.amlscreening.jpa.datamodel.FinancialSanctionedEntity;
 import com.pradatta.amlscreening.jpa.repository.FinancialSanctionedEntityRepository;
 import jakarta.annotation.Resource;
@@ -10,6 +12,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,8 +22,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
@@ -48,17 +55,20 @@ public class SanctionedNameRestControllerIntegrationTest {
     public void beforeEach() {
 
         String[][] names = {
-                {"PERSON", "John", "Doe", "John Doe"},
-                {"PERSON", "Malcolm", "Function", "Malcolm Function"},
-                {"PERSON", "Archibald", "Northbottom", "Archibald Northbottom"},
-                {"PERSON", "Rodney", "Artichoke", "Rodney Artichoke"},
-                {"ENTERPRISE", "", "", "Umbrella Corp."},
+                {"PERSON", "John", "", "Doe", "John Doe"},
+                {"PERSON", "Malcolm", "", "Function", "Malcolm Function"},
+                {"PERSON", "Archibald", "", "Northbottom", "Archibald Northbottom"},
+                {"PERSON", "Rodney", "", "Artichoke", "Rodney Artichoke"},
+                {"PERSON", "Harry", "James", "Potter", "Harry James Potter"},
+                {"PERSON", "Ronald", "", "Weasley", "Ronald Weasley"},
+                {"PERSON", "Osama", "", "Bin Laden", "Osama Bin Laden"},
+                {"ENTERPRISE", "", "", "", "Umbrella Corp."},
         };
 
 
         for (String[] name : names) {
             FinancialSanctionedEntity financialSanctioned = new FinancialSanctionedEntity(
-                    valueOf(name[0]), new Random().nextLong(), name[1], "", name[2], name[3],
+                    valueOf(name[0]), new Random().nextLong(), name[1], name[2], name[3], name[4],
                     new Date(), "www.testurl.com");
             financialSanctionedEntityRepository.save(financialSanctioned);
         }
@@ -122,7 +132,8 @@ public class SanctionedNameRestControllerIntegrationTest {
     @DisplayName("When update endpoint called, Sanctioned Entity is updated")
     public void updateSanctionedEntityWorks() throws Exception {
         //given
-        FinancialSanctionedEntity sanctionedEntity = financialSanctionedEntityRepository.findByWholeName("Rodney Artichoke").get();
+        FinancialSanctionedEntity sanctionedEntity = financialSanctionedEntityRepository.findByWholeName(
+                "Rodney Artichoke").get();
 
         sanctionedEntity.setMiddleName("Gregory");
 
@@ -133,6 +144,46 @@ public class SanctionedNameRestControllerIntegrationTest {
                             .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.middleName").value("Gregory"));
+    }
+
+    @ParameterizedTest(name = "When passed name is {0} -  Expected result is: {1}")
+    @DisplayName("AML Screening Checks, returns correct Sanctioned Entity")
+    @CsvSource(value = {
+            "Harry Potter           | RED",
+            "Harry James Potter     | RED",
+            "Harry J Potter         | RED",
+            "Harry J. Potter        | RED",
+            "Potter Harry           | RED",
+            "Potter, Harry          | RED",
+            "Potter, Harry James    | RED",
+            "Potter Harry J         | RED",
+            "Potter Harry J.        | RED",
+            "H J Potter             | RED",
+            "Harold Potter          | GREEN",
+            "Harri Patter           | AMBER",
+            "Horri Puttar           | GREEN",
+            "Harold Potts           | GREEN",
+            "H J P                  | GREEN",
+            "Osama Laden            | RED",
+            "Osama Bin Laden        | RED",
+            "Bin Laden, Osama       | RED",
+            "Laden Osama Bin        | RED",
+            "to the osama bin laden | RED",
+            "osama and bin laden    | RED",
+            "Umbrella Corporation   | RED",
+            "Umbrella Blues Inc.    | GREEN"
+
+    }, delimiter = '|')
+    public void whenSearchedWithNameReturnSanctionedEntityWithScore(String name,
+                                                                    String expectedStatus) throws Exception {
+        MvcResult result = mvc.perform(get("/aml-screening/api/v1/check/{name}", name)
+                                               .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)).andReturn();
+        String json = result.getResponse().getContentAsString();
+        AmlScreeningResponse amlScreeningResponse = (AmlScreeningResponse) convertJSONStringToObject(json,
+                                                                                                     AmlScreeningResponse.class);
+        assertThat(amlScreeningResponse.getStatusColour()).isEqualTo(ScreeningStatusColour.valueOf(expectedStatus));
     }
 
     public static String asJsonString(final Object obj) {
