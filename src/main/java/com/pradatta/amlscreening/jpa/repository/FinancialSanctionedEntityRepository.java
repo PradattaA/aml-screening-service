@@ -17,8 +17,8 @@ public interface FinancialSanctionedEntityRepository extends JpaRepository<Finan
     /**
      * Need to fetch close enough matched form the DB
      * Ideally need to use something like SOUNDEX, TRIGRAMS
-     * @param name
-     * @return
+     * @param name Name
+     * @return Lists of matching entity
      */
     List<FinancialSanctionedEntity> findByWholeNameIgnoreCaseContaining(String name);
 
@@ -27,4 +27,5 @@ public interface FinancialSanctionedEntityRepository extends JpaRepository<Finan
     List<FinancialSanctionedEntity> findByLastNameSoundex(String soundex);
     List<FinancialSanctionedEntity> findByWholeNameSoundex(String soundex);
 
+    List<FinancialSanctionedEntity> findByWholeNameContaining(String name);
 }

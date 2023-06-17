@@ -14,7 +14,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +24,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
@@ -62,6 +60,10 @@ public class SanctionedNameRestControllerIntegrationTest {
                 {"PERSON", "Harry", "James", "Potter", "Harry James Potter"},
                 {"PERSON", "Ronald", "", "Weasley", "Ronald Weasley"},
                 {"PERSON", "Osama", "", "Bin Laden", "Osama Bin Laden"},
+                {"PERSON", "Joe", "Luis", "Webb", "Joe Luis Webb"},
+                {"PERSON", "Madis", "", "", "Madis"},
+                {"PERSON", "Robert", "", "", "Robert"},
+                {"PERSON", "Mr. John", "", "Smith", "Mr. John Smith"},
                 {"ENTERPRISE", "", "", "", "Umbrella Corp."},
         };
 
@@ -118,7 +120,6 @@ public class SanctionedNameRestControllerIntegrationTest {
                     returnEntity.set((FinancialSanctionedEntity) convertJSONStringToObject(json,
                                                                                            FinancialSanctionedEntity.class));
                 });
-        ;
 
         //add
         Optional<FinancialSanctionedEntity> storedEntity = financialSanctionedEntityRepository.findById(
@@ -170,6 +171,10 @@ public class SanctionedNameRestControllerIntegrationTest {
             "Laden Osama Bin        | RED",
             "to the osama bin laden | RED",
             "osama and bin laden    | RED",
+            "Bert                   | AMBER",
+            "Madus                  | AMBER",
+            "Joe L. Webb            | RED",
+            "John Smith             | RED",
             "Umbrella Corporation   | RED",
             "Umbrella Blues Inc.    | GREEN"
 

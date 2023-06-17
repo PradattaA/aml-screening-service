@@ -105,6 +105,8 @@ public class AmlScreeningService {
                     firstPartSoundex));
             matchedEntity.addAll(financialSanctionedEntityRepository.findByWholeNameSoundex(
                     firstPartSoundex));
+            matchedEntity.addAll(financialSanctionedEntityRepository.findByWholeNameContaining(
+                    firstPart));
         } else if (cleanedUpName.size()==2) {
             //Only First Name & Last Name
             //Need to Check reverse order
