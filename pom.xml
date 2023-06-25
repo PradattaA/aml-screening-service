@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.pradatta</groupId>
 	<artifactId>aml-screening-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.5</version>
 	<name>aml-screening-service</name>
 	<description>AML Screening Service</description>
 	<properties>
@@ -89,6 +89,25 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.3.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<phase>install</phase>
+						<configuration>
+							<file>${project.build.finalName}.${project.packaging}</file>
+							<generatePom>false</generatePom>
+							<pomFile>pom.xml</pomFile>
+							<version>${version}</version>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
