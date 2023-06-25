@@ -75,6 +75,14 @@ Run `AmlScreeningServiceApplication` with VM Option
 -Dspring.profiles.active=development
 ```
 
+### Run with Docker
+```bash
+$ docker compose up
+```
+
+This should run postgreSQL and service in docker using the docker file
+
+
 # Service design and planning notes
 
 ### Service component and data flow
