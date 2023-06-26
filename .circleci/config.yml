@@ -25,8 +25,8 @@ jobs:
       # package into a jar
       - run: mvn clean package
 
-      # build and push docker image to docker hub
-      - run: mvn clean compile jib:build -Dimage=neelhridoy/aml-screening-service:$CIRCLE_BUILD_NUM
+      # build
+      - run: mvn clean compile
 
       # store raw contents of src code
       - store_artifacts:
