@@ -1,6 +1,5 @@
-# aml-screening-service
+# aml-screening-service [![CircleCI](https://circleci.com/gh/neelhridoy/aml-screening-service.svg?style=svg&circle-token=1c1e1d316f232d58291ac2a32be7391f8b238e29)](<LINK>)
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/null/neelhridoy/aml-screening-service/tree/main.svg?style=svg&circle-token=1c1e1d316f232d58291ac2a32be7391f8b238e29)](https://dl.circleci.com/status-badge/redirect/null/neelhridoy/aml-screening-service/tree/main)
 
 This is a simple aml-screening-service
 
