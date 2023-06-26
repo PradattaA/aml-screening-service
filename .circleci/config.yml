@@ -72,6 +72,28 @@ jobs:
           path: target/classes
           destination: aml-screening-service
 
+  publish-docker:
+    docker:
+      - image: cimg/openjdk:17.0.7-node
+    working_directory: ~/aml-screening-service
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - aml-screening-service-{{ checksum "pom.xml" }}
+      - run: mvn dependency:go-offline
+      - run: cp .mvn/wrapper/settings.xml ~/.m2/settings.xml
+      - run: echo "<settingsSecurity><master>${maven_security_master}</master></settingsSecurity>" > ~/.m2/settings-security.xml
+      - run:
+          name: Publish Docker image with Jib
+          command: |
+            ./mvnw compile jib:build -B -DskipTests=true \
+              -Dbuild.number=${CIRCLE_BUILD_NUM} \
+              -Dcommit.hash=${CIRCLE_SHA1} \
+              -Dcircle.workflow.guid=${CIRCLE_WORKFLOW_ID} \
+              -Dbuild.user=${CIRCLE_PROJECT_USERNAME} \
+              -Dbuild.repo=${CIRCLE_PROJECT_REPONAME} 
+
 workflows:
   build-workflow:
     jobs:
@@ -86,3 +108,11 @@ workflows:
             branches:
               only:
                 - main
+      - publish-docker:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - main
+
