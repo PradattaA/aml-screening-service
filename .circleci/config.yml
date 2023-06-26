@@ -1,0 +1,10 @@
+version: 2 # use CircleCI 2.0 #
+jobs: # a collection of steps
+  build: # runs not using Workflows must have a `build` job as entry point
+
+  docker: # run the steps with Docker
+  — image: circleci/openjdk:8-jdk-stretch # …with this image as the primary container; this is where all `steps` will run
+
+  steps: # a collection of executable commands
+  — checkout # Checkout the code from Github
+  — run: ./mvnw clean install # mvn clean install tells Maven to do the clean phase in each module before running the install phase for each module.
