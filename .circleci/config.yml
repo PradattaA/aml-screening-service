@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:17-jdk-buster
+      - image: cimg/openjdk:17.0.7-node
 
     working_directory: ~/aml-screening-service
 
