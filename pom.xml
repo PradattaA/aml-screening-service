@@ -110,7 +110,7 @@
                                 <file>${project.build.finalName}.${project.packaging}</file>
                                 <generatePom>false</generatePom>
                                 <pomFile>pom.xml</pomFile>
-                                <version>${version}</version>
+                                <version>${project.version}</version>
                             </configuration>
                         </execution>
                     </executions>
