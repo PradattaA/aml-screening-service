@@ -56,14 +56,21 @@ jobs:
 
     working_directory: ~/aml-screening-service
     steps:
+      # git pull
+      - checkout
 
-    # package into a jar
-    - run: mvn clean package
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - aml-screening-service-{{ checksum "pom.xml" }}
 
-    # store raw contents of src code
-    - store_artifacts:
-        path: target/classes
-        destination: aml-screening-service
+      # package into a jar
+      - run: mvn clean package
+
+      # store raw contents of src code
+      - store_artifacts:
+          path: target/classes
+          destination: aml-screening-service
 
 workflows:
   build-workflow:
@@ -71,7 +78,11 @@ workflows:
       - build
       - test:
           requires:
-          - build
+            - build
       - package:
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - main
