@@ -22,8 +22,16 @@ jobs:
             - ~/.m2
           key: aml-screening-service-{{ checksum "pom.xml" }}
 
-      # build & test
-      - run: mvn clean compile verify
+      # build
+      - run: mvn clean compile
+  test:
+    docker:
+      - image: cimg/openjdk:17.0.7-node
+
+    working_directory: ~/aml-screening-service
+    steps:
+      # Verify
+      - run: mvn verify
 
       # store test results
       - run:
@@ -34,11 +42,24 @@ jobs:
           when: always
       - store_test_results:
           path: ~/test-results
+  package:
+    docker:
+      - image: cimg/openjdk:17.0.7-node
 
-      # package into a jar
-      - run: mvn clean package
+    working_directory: ~/aml-screening-service
+    steps:
 
-      # store raw contents of src code
-      - store_artifacts:
-          path: target/classes
-          destination: aml-screening-service
+    # package into a jar
+    - run: mvn clean package
+
+    # store raw contents of src code
+    - store_artifacts:
+        path: target/classes
+        destination: aml-screening-service
+
+workflows:
+  build-workflow:
+    jobs:
+      - build
+      - test
+      - package
