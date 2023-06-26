@@ -82,6 +82,7 @@ workflows:
       - package:
           requires:
             - build
+            - test
           filters:
             branches:
               only:
