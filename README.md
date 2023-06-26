@@ -93,5 +93,3 @@ This should run postgreSQL and service in docker using the docker file
 
 ### Fuzzy Lookup from DB Logic
 ![IMG_0004](https://github.com/neelhridoy/aml-screening-service/assets/79056702/591ff402-e1de-45d2-b6e8-afe783c296ce)
-
-$ brew install postgresql
