@@ -1,5 +1,7 @@
 # aml-screening-service
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/null/neelhridoy/aml-screening-service/tree/main.svg?style=svg&circle-token=1c1e1d316f232d58291ac2a32be7391f8b238e29)](https://dl.circleci.com/status-badge/redirect/null/neelhridoy/aml-screening-service/tree/main)
+
 This is a simple aml-screening-service
 
 # The Background
