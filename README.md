@@ -1,4 +1,5 @@
-# aml-screening-service
+# aml-screening-service [![CircleCI](https://circleci.com/gh/neelhridoy/aml-screening-service.svg?style=svg&circle-token=1c1e1d316f232d58291ac2a32be7391f8b238e29)](<LINK>)
+
 
 This is a simple aml-screening-service
 
@@ -92,5 +93,3 @@ This should run postgreSQL and service in docker using the docker file
 
 ### Fuzzy Lookup from DB Logic
 ![IMG_0004](https://github.com/neelhridoy/aml-screening-service/assets/79056702/591ff402-e1de-45d2-b6e8-afe783c296ce)
-
-$ brew install postgresql
