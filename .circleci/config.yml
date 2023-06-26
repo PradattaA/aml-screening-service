@@ -30,6 +30,14 @@ jobs:
 
     working_directory: ~/aml-screening-service
     steps:
+      # git pull
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - aml-screening-service-{{ checksum "pom.xml" }}
+
       # Verify
       - run: mvn verify
 
@@ -64,4 +72,6 @@ workflows:
       - test:
           requires:
           - build
-      - package
+      - package:
+          requires:
+            - build
