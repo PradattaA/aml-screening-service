@@ -36,7 +36,7 @@ jobs:
           path: ~/test-results
 
       # package into a jar
-      - run: mvn clean package
+      - run: mvn package
 
       # store raw contents of src code
       - store_artifacts:
