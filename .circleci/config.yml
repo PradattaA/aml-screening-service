@@ -22,11 +22,11 @@ jobs:
             - ~/.m2
           key: aml-screening-service-{{ checksum "pom.xml" }}
 
+      # build & test
+      - run: mvn clean compile verify
+
       # package into a jar
       - run: mvn clean package
-
-      # build and push docker image to docker hub
-      - run: mvn clean compile jib:build -Dimage=neelhridoy/aml-screening-service:$CIRCLE_BUILD_NUM
 
       # store raw contents of src code
       - store_artifacts:
