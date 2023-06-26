@@ -64,11 +64,4 @@ public class Soundex {
         output.append("0000");
         return output.substring(0, 4);
     }
-
-    public static void main(String[] args) {
-        System.out.println(getCode("hello"));
-        System.out.println(getCode("hello,"));
-        System.out.println(getCode("he llo,"));
-        System.out.println(getCode("he 12llo,"));
-    }
 }
